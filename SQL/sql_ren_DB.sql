@@ -1,0 +1,6 @@
+USE master;
+GO
+
+ALTER DATABASE Name_OLD
+MODIFY NAME = Converter_UDC;
+GO

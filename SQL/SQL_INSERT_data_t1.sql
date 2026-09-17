@@ -1,4 +1,4 @@
-USE DE_OL_Klinikum_ConverterDB;
+USE Converter_UDC;
 GO
 
 INSERT INTO dbo.data_measurement
