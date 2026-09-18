@@ -1,3 +1,7 @@
+-- Author: R.Lisovenko
+-- Date: 18.09.2026
+-- Description: Add ExpDate to dbo.data_measurement and document its export-time purpose.
+
 USE Converter_UDC;
 GO
 

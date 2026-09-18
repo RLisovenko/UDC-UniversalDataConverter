@@ -1,0 +1,15 @@
+sql_ren_DB.sql: Rename the development database to Converter_UDC.
+sql_cr_data_measurement.sql: Create the main internal measurement data table dbo.data_measurement.
+SQL_field_mapping_config.sql: Create the configurable field mapping table for IMPORT and EXPORT field mappings.
+SQL_empty.sql: Simple test query for reading data from the standardized export VIEW.
+sql_cr_data_measure_map.sql: Create the canonical intermediate exchange table dbo.data_measure_map.
+sql_alterType_data_measurement.sql: Align key dbo.data_measurement column data types with the canonical mapping structure.
+sql_add_ExpDate_1_data_measurement.sql: Add ExpDate to dbo.data_measurement and document its export-time purpose.
+SQL_tbl_column.sql: Inspect the current database and column metadata of dbo.data_measure_map.
+SQL_INSERT_t1.sql: Insert synthetic test measurement data for three patients into dbo.data_measurement.
+SQL_INSERT_data_t1.sql: Legacy test-data INSERT script for dbo.data_measurement.
+SQL_CR_vw_data_measure_map.sql: Create the standardized export VIEW dbo.vw_data_measure_map.
+SQL_ins_tbl_map.sql: Copy standardized measurement data from dbo.data_measurement into dbo.data_measure_map.
+sql_alter_DataValue_data_measurement_map.sql: Rename the canonical measurement value column from Value to DataValue.
+sql_select_Anonymized Patient_data_measurement.sql: Inspect the default constraint configured for dbo.data_measure_map.SubjName.
+sql_alterAnonymized Patient_data_measurement.sql: Add the default anonymized subject name for dbo.data_measure_map.SubjName.

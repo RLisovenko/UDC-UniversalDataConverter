@@ -1,3 +1,7 @@
+-- Author: R.Lisovenko
+-- Date: 18.09.2026
+-- Description: Insert synthetic test measurement data for three patients into dbo.data_measurement.
+
 USE Converter_UDC;
 GO
 

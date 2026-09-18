@@ -1,3 +1,7 @@
+-- Author: R.Lisovenko
+-- Date: 18.09.2026
+-- Description: Create the main internal measurement data table dbo.data_measurement.
+
 USE Converter_UDC;
 GO
 

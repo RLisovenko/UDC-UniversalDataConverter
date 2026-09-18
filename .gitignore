@@ -1,5 +1,8 @@
 cheat_sheet.txt
 
+# Visual Studio local files
+.vs/
+
 # Python
 __pycache__/
 *.py[cod]

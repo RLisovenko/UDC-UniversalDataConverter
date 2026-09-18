@@ -1,3 +1,7 @@
+-- Author: R.Lisovenko
+-- Date: 18.09.2026
+-- Description: Legacy test-data INSERT script for dbo.data_measurement.
+
 USE Converter_UDC;
 GO
 

@@ -1,3 +1,7 @@
+-- Author: R.Lisovenko
+-- Date: 18.09.2026
+-- Description: Align key dbo.data_measurement column data types with the canonical mapping structure.
+
 USE Converter_UDC;
 GO
 

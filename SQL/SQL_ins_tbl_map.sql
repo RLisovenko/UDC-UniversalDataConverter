@@ -1,3 +1,7 @@
+-- Author: R.Lisovenko
+-- Date: 18.09.2026
+-- Description: Copy standardized measurement data from dbo.data_measurement into dbo.data_measure_map.
+
 INSERT INTO dbo.data_measure_map
 (
     SubjID,

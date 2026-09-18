@@ -1,3 +1,7 @@
+-- Author: R.Lisovenko
+-- Date: 18.09.2026
+-- Description: Inspect the default constraint configured for dbo.data_measure_map.SubjName.
+
 SELECT
     dc.name AS ConstraintName,
     c.name AS ColumnName,

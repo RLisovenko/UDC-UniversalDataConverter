@@ -1,3 +1,7 @@
+-- Author: R.Lisovenko
+-- Date: 18.09.2026
+-- Description: Inspect the current database and column metadata of dbo.data_measure_map.
+
 USE Converter_UDC;
 GO
 
