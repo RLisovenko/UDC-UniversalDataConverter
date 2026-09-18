@@ -2,9 +2,9 @@
 # Date: 18.09.2026
 # Description: Common UDC export dispatcher. Selects export format and starts the corresponding exporter.
 
-from export_CSV import export_to_csv
-from export_JSON import export_to_json
-from export_XML import export_to_xml
+from utils.export_CSV import export_to_csv
+from utils.export_JSON import export_to_json
+from utils.export_XML import export_to_xml
 
 
 def export_data(export_type):

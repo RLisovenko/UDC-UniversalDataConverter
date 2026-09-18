@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='utf-8'?>
+<UDCExport>
+    <Data>
+        <Record>
+            <SubjID>1</SubjID>
+            <SubjName>Anonymized Patient-1</SubjName>
+            <EventDate>2026-09-17 09:00:00</EventDate>
+            <ExpDate>2026-09-18 14:08:16.692796</ExpDate>
+            <ParameterID>1</ParameterID>
+            <ParameterName>Glucose</ParameterName>
+            <DataValue>5.800000</DataValue>
+            <Unit>mmol/L</Unit>
+            <Comment />
+        </Record>
+        <Record>
+            <SubjID>1</SubjID>
+            <SubjName>Anonymized Patient-1</SubjName>
+            <EventDate>2026-09-17 09:05:00</EventDate>
+            <ExpDate>2026-09-18 14:08:16.692796</ExpDate>
+            <ParameterID>2</ParameterID>
+            <ParameterName>Temperature</ParameterName>
+            <DataValue>36.700000</DataValue>
+            <Unit>C</Unit>
+            <Comment />
+        </Record>
+        <Record>
+            <SubjID>1</SubjID>
+            <SubjName>Anonymized Patient-1</SubjName>
+            <EventDate>2026-09-17 09:10:00</EventDate>
+            <ExpDate>2026-09-18 14:08:16.692796</ExpDate>
+            <ParameterID>3</ParameterID>
+            <ParameterName>CRP</ParameterName>
+            <DataValue>2.400000</DataValue>
+            <Unit>mg/L</Unit>
+            <Comment />
+        </Record>
+        <Record>
+            <SubjID>2</SubjID>
+            <SubjName>Anonymized Patient-2</SubjName>
+            <EventDate>2026-09-17 10:00:00</EventDate>
+            <ExpDate>2026-09-18 14:08:16.692796</ExpDate>
+            <ParameterID>1</ParameterID>
+            <ParameterName>Glucose</ParameterName>
+            <DataValue>6.200000</DataValue>
+            <Unit>mmol/L</Unit>
+            <Comment />
+        </Record>
+        <Record>
+            <SubjID>2</SubjID>
+            <SubjName>Anonymized Patient-2</SubjName>
+            <EventDate>2026-09-17 10:05:00</EventDate>
+            <ExpDate>2026-09-18 14:08:16.692796</ExpDate>
+            <ParameterID>2</ParameterID>
+            <ParameterName>Temperature</ParameterName>
+            <DataValue>37.200000</DataValue>
+            <Unit>C</Unit>
+            <Comment />
+        </Record>
+        <Record>
+            <SubjID>2</SubjID>
+            <SubjName>Anonymized Patient-2</SubjName>
+            <EventDate>2026-09-17 10:10:00</EventDate>
+            <ExpDate>2026-09-18 14:08:16.692796</ExpDate>
+            <ParameterID>3</ParameterID>
+            <ParameterName>CRP</ParameterName>
+            <DataValue>6.800000</DataValue>
+            <Unit>mg/L</Unit>
+            <Comment />
+        </Record>
+        <Record>
+            <SubjID>3</SubjID>
+            <SubjName>Anonymized Patient-3</SubjName>
+            <EventDate>2026-09-17 11:00:00</EventDate>
+            <ExpDate>2026-09-18 14:08:16.692796</ExpDate>
+            <ParameterID>1</ParameterID>
+            <ParameterName>Glucose</ParameterName>
+            <DataValue>4.900000</DataValue>
+            <Unit>mmol/L</Unit>
+            <Comment />
+        </Record>
+        <Record>
+            <SubjID>3</SubjID>
+            <SubjName>Anonymized Patient-3</SubjName>
+            <EventDate>2026-09-17 11:05:00</EventDate>
+            <ExpDate>2026-09-18 14:08:16.692796</ExpDate>
+            <ParameterID>2</ParameterID>
+            <ParameterName>Temperature</ParameterName>
+            <DataValue>38.100000</DataValue>
+            <Unit>C</Unit>
+            <Comment />
+        </Record>
+        <Record>
+            <SubjID>3</SubjID>
+            <SubjName>Anonymized Patient-3</SubjName>
+            <EventDate>2026-09-17 11:10:00</EventDate>
+            <ExpDate>2026-09-18 14:08:16.692796</ExpDate>
+            <ParameterID>3</ParameterID>
+            <ParameterName>CRP</ParameterName>
+            <DataValue>18.500000</DataValue>
+            <Unit>mg/L</Unit>
+            <Comment />
+        </Record>
+    </Data>
+    <----->UDC Export | Author LiR: LiR: R.Lisovenko@outlook.com | Date: 18.09.2026 16:08:16</----->
+</UDCExport>

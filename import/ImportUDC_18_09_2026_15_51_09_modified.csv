@@ -1,0 +1,12 @@
+﻿SubjID,SubjName,EventDate,ExpDate,ParameterID,ParameterName,DataValue,Unit,Comment
+1,Anonymized Patient-1,2026-09-17 09:00:00,2026-09-18 13:51:16.378580,1,Glucose,5.850000,mmol/L,Imported CSV test
+1,Anonymized Patient-1,2026-09-17 09:05:00,2026-09-18 13:51:16.378580,2,Temperature,36.800000,C,External source demo
+1,Anonymized Patient-1,2026-09-17 09:10:00,2026-09-18 13:51:16.378580,3,CRP,2.400000,mg/L,
+2,Anonymized Patient-2,2026-09-17 10:00:00,2026-09-18 13:51:16.378580,1,Glucose,6.200000,mmol/L,
+2,Anonymized Patient-2,2026-09-17 10:05:00,2026-09-18 13:51:16.378580,2,Temperature,37.200000,C,
+2,Anonymized Patient-2,2026-09-17 10:10:00,2026-09-18 13:51:16.378580,3,CRP,6.800000,mg/L,
+3,Anonymized Patient-3,2026-09-17 11:00:00,2026-09-18 13:51:16.378580,1,Glucose,4.900000,mmol/L,
+3,Anonymized Patient-3,2026-09-17 11:05:00,2026-09-18 13:51:16.378580,2,Temperature,38.100000,C,
+3,Anonymized Patient-3,2026-09-17 11:10:00,2026-09-18 13:51:16.378580,3,CRP,18.500000,mg/L,
+
+UDC Export | Author LiR: LiR: R.Lisovenko@outlook.com | Date: 18.09.2026 15:51:16

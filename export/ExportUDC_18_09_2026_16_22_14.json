@@ -1,0 +1,104 @@
+{
+    "data": [
+        {
+            "SubjID": 1,
+            "SubjName": "Anonymized Patient-1",
+            "EventDate": "2026-09-17 09:00:00",
+            "ExpDate": "2026-09-18 14:22:14.439286",
+            "ParameterID": 1,
+            "ParameterName": "Glucose",
+            "DataValue": "5.800000",
+            "Unit": "mmol/L",
+            "Comment": null
+        },
+        {
+            "SubjID": 1,
+            "SubjName": "Anonymized Patient-1",
+            "EventDate": "2026-09-17 09:05:00",
+            "ExpDate": "2026-09-18 14:22:14.439286",
+            "ParameterID": 2,
+            "ParameterName": "Temperature",
+            "DataValue": "36.700000",
+            "Unit": "C",
+            "Comment": null
+        },
+        {
+            "SubjID": 1,
+            "SubjName": "Anonymized Patient-1",
+            "EventDate": "2026-09-17 09:10:00",
+            "ExpDate": "2026-09-18 14:22:14.439286",
+            "ParameterID": 3,
+            "ParameterName": "CRP",
+            "DataValue": "2.400000",
+            "Unit": "mg/L",
+            "Comment": null
+        },
+        {
+            "SubjID": 2,
+            "SubjName": "Anonymized Patient-2",
+            "EventDate": "2026-09-17 10:00:00",
+            "ExpDate": "2026-09-18 14:22:14.439286",
+            "ParameterID": 1,
+            "ParameterName": "Glucose",
+            "DataValue": "6.200000",
+            "Unit": "mmol/L",
+            "Comment": null
+        },
+        {
+            "SubjID": 2,
+            "SubjName": "Anonymized Patient-2",
+            "EventDate": "2026-09-17 10:05:00",
+            "ExpDate": "2026-09-18 14:22:14.439286",
+            "ParameterID": 2,
+            "ParameterName": "Temperature",
+            "DataValue": "37.200000",
+            "Unit": "C",
+            "Comment": null
+        },
+        {
+            "SubjID": 2,
+            "SubjName": "Anonymized Patient-2",
+            "EventDate": "2026-09-17 10:10:00",
+            "ExpDate": "2026-09-18 14:22:14.439286",
+            "ParameterID": 3,
+            "ParameterName": "CRP",
+            "DataValue": "6.800000",
+            "Unit": "mg/L",
+            "Comment": null
+        },
+        {
+            "SubjID": 3,
+            "SubjName": "Anonymized Patient-3",
+            "EventDate": "2026-09-17 11:00:00",
+            "ExpDate": "2026-09-18 14:22:14.439286",
+            "ParameterID": 1,
+            "ParameterName": "Glucose",
+            "DataValue": "4.900000",
+            "Unit": "mmol/L",
+            "Comment": null
+        },
+        {
+            "SubjID": 3,
+            "SubjName": "Anonymized Patient-3",
+            "EventDate": "2026-09-17 11:05:00",
+            "ExpDate": "2026-09-18 14:22:14.439286",
+            "ParameterID": 2,
+            "ParameterName": "Temperature",
+            "DataValue": "38.100000",
+            "Unit": "C",
+            "Comment": null
+        },
+        {
+            "SubjID": 3,
+            "SubjName": "Anonymized Patient-3",
+            "EventDate": "2026-09-17 11:10:00",
+            "ExpDate": "2026-09-18 14:22:14.439286",
+            "ParameterID": 3,
+            "ParameterName": "CRP",
+            "DataValue": "18.500000",
+            "Unit": "mg/L",
+            "Comment": null
+        }
+    ],
+    "-----": "UDC Export | Author LiR: LiR: R.Lisovenko@outlook.com | Date: 18.09.2026 16:22:14"
+}

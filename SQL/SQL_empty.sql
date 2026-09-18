@@ -11,3 +11,9 @@ GO
 
 select *
 From vw_data_measure_map
+
+SELECT *
+FROM dbo.data_measure_map
+ORDER BY ID;
+
+
