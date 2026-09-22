@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}About - Converter_2{% endblock %}
+
+{% block content %}
+
+<h1>About</h1>
+
+<section class="panel">
+
+    <h2>Project Notes</h2>
+
+    <p>
+        This application is a small demonstration prototype developed
+        within a limited timeframe to illustrate a basic data import
+        and export workflow around a SQL Server database.
+    </p>
+
+    <p>
+        All data included in this project is synthetic and was created
+        exclusively for testing and demonstration purposes.
+        The project does not contain real patient or clinical information.
+    </p>
+
+    <p>
+        The current version intentionally has a limited scope.
+        Export is implemented for <strong>CSV, JSON and XML</strong>,
+        while the current import demonstration focuses on
+        <strong>CSV</strong>. Some functions, validation logic and
+        user-interface elements are simplified and should be considered
+        part of an early prototype rather than a production-ready system.
+    </p>
+
+    <p>
+        If the project is continued, the intention is to extend the
+        import and transformation pipeline, improve validation and mapping,
+        strengthen error handling, expand database integration and further
+        refine the user interface.
+    </p>
+
+    <p>
+        To accelerate development within the available timeframe,
+        an AI coding agent was used for selected implementation,
+        refactoring and development-support tasks.
+    </p>
+
+    <p>
+        At the same time, the overall architecture, backend development
+        and application logic, database design, integration decisions,
+        Docker-based environment, testing and final technical review
+        remained under my responsibility as the backend developer
+        of the project.
+    </p>
+
+    <div style="margin-top:34px;text-align:right;font-weight:700">
+        LiR
+    </div>
+
+</section>
+
+{% endblock %}

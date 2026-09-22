@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}DB View - Converter_2{% endblock %}
+
+{% block content %}
+
+<h1>Database View</h1>
+
+<section class="panel">
+
+    <form method="get" action="{{ url_for('db_view') }}">
+
+        <div class="toolbar">
+
+            <div class="field">
+                <label for="table">Table / View</label>
+
+                <select id="table" name="table">
+                    <option value="">Select object</option>
+
+                    {% for table in tables %}
+                        <option value="{{ table }}"
+                            {% if selected_table == table %}selected{% endif %}>
+                            {{ table }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="limit">Rows</label>
+
+                <select id="limit" name="limit">
+                    {% for n in [50, 100, 250, 500, 1000] %}
+                        <option value="{{ n }}"
+                            {% if limit|string == n|string %}selected{% endif %}>
+                            {{ n }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <button class="btn" type="submit">
+                    Load
+                </button>
+            </div>
+
+        </div>
+    </form>
+
+    {% if selected_table %}
+        <p>
+            Object:
+            <strong>{{ selected_table }}</strong>
+            · rows returned:
+            <strong>{{ row_count }}</strong>
+        </p>
+    {% endif %}
+
+    {% if rows %}
+
+        <div class="table-wrap">
+            <table>
+
+                <thead>
+                    <tr>
+                        {% for col in columns %}
+                            <th>{{ col }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for row in rows %}
+                        <tr>
+                            {% for value in row %}
+                                <td>{{ value }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+    {% elif selected_table %}
+
+        <p class="muted">
+            No rows returned.
+        </p>
+
+    {% else %}
+
+        <p class="muted">
+            Select a table or view and press Load.
+        </p>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

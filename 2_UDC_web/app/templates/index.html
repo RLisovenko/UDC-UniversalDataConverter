@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Converter_2 / UDC{% endblock %}
+
+{% block content %}
+
+<h1>Universal Data Converter</h1>
+<p class="muted">
+    SQL Server database viewer, import and export interface.
+</p>
+
+<div class="grid">
+
+    <section class="card">
+        <h3>Database View</h3>
+        <p>Browse SQL Server tables and views.</p>
+        <a class="btn" href="{{ url_for('db_view') }}">
+            Open DB View
+        </a>
+    </section>
+
+    <section class="card">
+        <h3>Export</h3>
+        <p>Export standardized UDC data to CSV, JSON or XML.</p>
+        <a class="btn" href="{{ url_for('export_page') }}">
+            Open Export
+        </a>
+    </section>
+
+    <section class="card">
+        <h3>Import</h3>
+        <p>Upload CSV, JSON or XML data for UDC import.</p>
+        <a class="btn" href="{{ url_for('import_page') }}">
+            Open Import
+        </a>
+    </section>
+
+</div>
+
+<br>
+
+<section class="panel">
+
+    <h2>System</h2>
+
+    <div class="kv">
+        <div class="muted">Application</div>
+        <div>Converter_2 / UDC</div>
+
+        <div class="muted">Author</div>
+        <div>{{ author }}</div>
+
+        <div class="muted">Server</div>
+        <div>{{ server_name }}</div>
+
+        <div class="muted">Database</div>
+        <div>{{ database_name }}</div>
+
+        <div class="muted">Connection</div>
+        <div>
+            {% if db_connected %}
+                <span class="status">Connected</span>
+            {% else %}
+                <span style="color:#b91c1c;font-weight:700">
+                    Not connected
+                </span>
+            {% endif %}
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}

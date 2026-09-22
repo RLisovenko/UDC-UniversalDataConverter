@@ -1,0 +1,4 @@
+﻿SubjID,SubjName,EventDate,ExpDate,ParameterID,ParameterName,DataValue,Unit,Comment
+9101,Client-A-Subject-01,2026-09-22T08:15:00,,1,HeartRate,72,bpm,IMPORT TEST | Client A | morning measurement
+9101,Client-A-Subject-01,2026-09-22T08:16:00,,2,BodyTemperature,36.7,C,IMPORT TEST | Client A | temperature
+9102,Client-A-Subject-02,2026-09-22T09:05:00,,3,OxygenSaturation,98,%,IMPORT TEST | Client A | sample CSV

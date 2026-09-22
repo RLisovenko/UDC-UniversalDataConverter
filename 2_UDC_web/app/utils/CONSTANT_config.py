@@ -1,5 +1,5 @@
 # Author: R.Lisovenko@outlook.com
-# Date: 18.09.2026
+# Date: 21.09.2026
 # Description: Common constants and configuration values for UDC.
 
 from pathlib import Path
@@ -44,7 +44,7 @@ UDC_IMPORT_COLUMNS = (
 
 #----------------------------- Database objects
 DRIVER="DRIVER={ODBC Driver 18 for SQL Server};"
-SERVER = r"localhost\sql_conv_dev"
+SERVER = r"mssql_2025_dev,1433"  			#r"localhost\sql_conv_dev"
 DATABASE = "Converter_UDC"
 
 EXPORT_VIEW = "dbo.vw_data_measure_map"

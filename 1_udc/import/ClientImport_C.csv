@@ -1,0 +1,4 @@
+﻿SubjID,SubjName,EventDate,ExpDate,ParameterID,ParameterName,DataValue,Unit,Comment
+9301,Client-C-Subject-01,2026-09-22T12:00:00,,1,HeartRate,68,bpm,IMPORT TEST | Client C | resting measurement
+9302,Client-C-Subject-02,2026-09-22T12:20:00,,2,BodyTemperature,37.0,C,IMPORT TEST | Client C | sample CSV
+9302,Client-C-Subject-02,2026-09-22T12:21:00,,3,OxygenSaturation,99,%,IMPORT TEST | Client C | final test row

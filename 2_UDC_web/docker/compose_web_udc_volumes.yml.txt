@@ -1,0 +1,12 @@
+# Add these two bind mounts to the web_udc service in compose.yml.
+#
+# From:
+#   p1-2_UDC_web/docker/compose.yml
+#
+# ".." points to p1-2_UDC_web.
+
+services:
+  web_udc:
+    volumes:
+      - ../app/import:/app/import
+      - ../app/export:/app/export

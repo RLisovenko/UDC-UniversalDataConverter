@@ -1,0 +1,1 @@
+docker build -t udc_db_init:latest ./udc_db_init

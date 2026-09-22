@@ -16,4 +16,6 @@ SELECT *
 FROM dbo.data_measure_map
 ORDER BY ID;
 
+select * 
+from list_measurement_parameter
 

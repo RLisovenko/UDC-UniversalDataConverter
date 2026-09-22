@@ -1,0 +1,452 @@
+{% extends "base.html" %}
+
+{% block title %}Export - Converter_2{% endblock %}
+
+{% block content %}
+
+<h1>Export Data</h1>
+
+<section class="panel">
+
+    <div class="flash" style="background:#eef6ff;border-color:#bfdbfe">
+        <strong>Test implementation:</strong>
+        Export supports <strong>CSV, JSON and XML</strong>.
+    </div>
+
+    <form
+        id="export-form"
+        method="post"
+        action="{{ url_for('export_page') }}"
+    >
+
+        <div class="toolbar">
+            <div class="field">
+                <label for="format">1. Export format</label>
+                <select id="format" name="format">
+                    <option value="csv">CSV</option>
+                    <option value="json">JSON</option>
+                    <option value="xml">XML</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="directory-box">
+            <div>
+                <strong>2. Destination folder:</strong>
+            </div>
+
+            <div id="directory-name"
+                 class="directory-value">
+                app/export
+            </div>
+
+            <button
+                id="choose-directory"
+                class="btn secondary"
+                type="button">
+                Choose another folder
+            </button>
+
+            <button
+                id="clear-directory"
+                class="btn secondary"
+                type="button"
+                style="display:none">
+                Use default folder
+            </button>
+        </div>
+
+        <div style="margin-top:16px">
+            <button
+                id="export-button"
+                class="btn"
+                type="submit">
+                3. Generate & Save
+            </button>
+        </div>
+
+    </form>
+
+    <div id="export-message"
+         class="inline-message muted">
+    </div>
+
+    <p class="muted" style="font-size:12px;margin-bottom:0">
+        Every export is created in <strong>app/export</strong>.
+        Choosing another folder additionally saves a local copy there.
+    </p>
+
+</section>
+
+<section class="panel" style="margin-top:18px">
+
+    <h2>Ready export examples</h2>
+
+    <p class="muted">
+        These files are already included in <strong>app/export</strong>
+        and show the result of the implemented export formats.
+    </p>
+
+    {% if export_examples %}
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>File</th>
+                    <th>Format</th>
+                    <th>Size</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in export_examples %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.format }}</td>
+                    <td>{{ item.size }} bytes</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p class="muted">
+            No export examples were found in app/export.
+        </p>
+    {% endif %}
+
+</section>
+
+<section class="panel" style="margin-top:18px">
+    <h2>Recent operations</h2>
+
+    {% if recent_operations %}
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Operation</th>
+                    <th>File</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody id="export-operations-body">
+                {% for item in recent_operations %}
+                <tr>
+                    <td>{{ item.time }}</td>
+                    <td>{{ item.operation }}</td>
+                    <td>{{ item.filename }}</td>
+                    <td>
+                        {% if item.status == 'OK' %}
+                            <span style="color:#15803d;font-weight:700">OK</span>
+                        {% elif item.status == 'RUNNING' %}
+                            <span style="color:#b45309;font-weight:700">RUNNING</span>
+                        {% else %}
+                            <span style="color:#b91c1c;font-weight:700">ERROR</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ item.detail }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p class="muted">No export operations yet.</p>
+    {% endif %}
+</section>
+
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+(function () {
+    const form =
+        document.getElementById("export-form");
+
+    const chooseButton =
+        document.getElementById("choose-directory");
+
+    const clearButton =
+        document.getElementById("clear-directory");
+
+    const exportButton =
+        document.getElementById("export-button");
+
+    const directoryName =
+        document.getElementById("directory-name");
+
+    const message =
+        document.getElementById("export-message");
+
+    let directoryHandle = null;
+
+    function setMessage(text, isError = false) {
+        message.textContent = text;
+        message.style.color =
+            isError ? "#b91c1c" : "#6b7280";
+    }
+
+    chooseButton.addEventListener(
+        "click",
+        async function () {
+            if (!("showDirectoryPicker" in window)) {
+                setMessage(
+                    "Direct folder selection is not supported by this browser.",
+                    true
+                );
+                return;
+            }
+
+            try {
+                directoryHandle =
+                    await window.showDirectoryPicker({
+                        mode: "readwrite"
+                    });
+
+                directoryName.textContent =
+                    directoryHandle.name;
+
+                clearButton.style.display =
+                    "inline-block";
+
+                setMessage(
+                    "Additional local folder selected: "
+                    + directoryHandle.name
+                );
+
+            } catch (error) {
+                if (error.name !== "AbortError") {
+                    setMessage(
+                        "Folder selection failed: "
+                        + error.message,
+                        true
+                    );
+                }
+            }
+        }
+    );
+
+    clearButton.addEventListener(
+        "click",
+        function () {
+            directoryHandle = null;
+            directoryName.textContent = "app/export";
+            clearButton.style.display = "none";
+            setMessage(
+                "Default project folder app/export will be used."
+            );
+        }
+    );
+
+    function filenameFromDisposition(disposition) {
+        if (!disposition) {
+            return "udc_export.dat";
+        }
+
+        const utf8Match =
+            disposition.match(
+                /filename\*=UTF-8''([^;]+)/i
+            );
+
+        if (utf8Match) {
+            return decodeURIComponent(
+                utf8Match[1].replace(/["']/g, "")
+            );
+        }
+
+        const normalMatch =
+            disposition.match(
+                /filename="?([^";]+)"?/i
+            );
+
+        return normalMatch
+            ? normalMatch[1]
+            : "udc_export.dat";
+    }
+
+    async function ensureWritePermission(handle) {
+        const options = { mode: "readwrite" };
+
+        if (
+            await handle.queryPermission(options)
+            === "granted"
+        ) {
+            return true;
+        }
+
+        return (
+            await handle.requestPermission(options)
+            === "granted"
+        );
+    }
+
+    async function refreshExportOperations() {
+        const response = await fetch(
+            "{{ url_for('api_activity') }}?operation=EXPORT",
+            { cache: "no-store" }
+        );
+
+        if (!response.ok) {
+            return;
+        }
+
+        const events = await response.json();
+        const tbody =
+            document.getElementById(
+                "export-operations-body"
+            );
+
+        if (!tbody) {
+            // First operation on an initially empty page:
+            // easiest and safest is to reload once.
+            window.location.reload();
+            return;
+        }
+
+        tbody.replaceChildren();
+
+        for (const item of events.slice(0, 10)) {
+            const row = document.createElement("tr");
+
+            const values = [
+                item.time,
+                item.operation,
+                item.filename,
+                item.status,
+                item.detail || ""
+            ];
+
+            values.forEach((value, index) => {
+                const cell = document.createElement("td");
+                cell.textContent = value;
+
+                if (index === 3) {
+                    cell.style.fontWeight = "700";
+
+                    if (value === "OK") {
+                        cell.style.color = "#15803d";
+                    } else if (value === "RUNNING") {
+                        cell.style.color = "#b45309";
+                    } else {
+                        cell.style.color = "#b91c1c";
+                    }
+                }
+
+                row.appendChild(cell);
+            });
+
+            tbody.appendChild(row);
+        }
+    }
+
+    form.addEventListener(
+        "submit",
+        async function (event) {
+            event.preventDefault();
+
+            exportButton.disabled = true;
+            chooseButton.disabled = true;
+            clearButton.disabled = true;
+
+            setMessage("Generating export file...");
+
+            try {
+                const response = await fetch(
+                    form.action,
+                    {
+                        method: "POST",
+                        body: new FormData(form),
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error(
+                        "Export request failed: "
+                        + response.status
+                    );
+                }
+
+                const filename =
+                    filenameFromDisposition(
+                        response.headers.get(
+                            "Content-Disposition"
+                        )
+                    );
+
+                const blob =
+                    await response.blob();
+
+                if (directoryHandle) {
+                    const canWrite =
+                        await ensureWritePermission(
+                            directoryHandle
+                        );
+
+                    if (!canWrite) {
+                        throw new Error(
+                            "Write permission for the selected folder was denied."
+                        );
+                    }
+
+                    const fileHandle =
+                        await directoryHandle.getFileHandle(
+                            filename,
+                            { create: true }
+                        );
+
+                    const writable =
+                        await fileHandle.createWritable();
+
+                    await writable.write(blob);
+                    await writable.close();
+
+                    setMessage(
+                        `Created in app/export and copied to `
+                        + `${directoryHandle.name}/${filename}`
+                    );
+
+                } else {
+                    // Download a browser copy while the server-side
+                    // export already remains in app/export.
+                    const objectUrl =
+                        URL.createObjectURL(blob);
+
+                    const anchor =
+                        document.createElement("a");
+
+                    anchor.href = objectUrl;
+                    anchor.download = filename;
+                    document.body.appendChild(anchor);
+                    anchor.click();
+                    anchor.remove();
+
+                    URL.revokeObjectURL(objectUrl);
+
+                    setMessage(
+                        `Created in app/export: ${filename}`
+                    );
+                }
+
+                await refreshExportOperations();
+
+            } catch (error) {
+                setMessage(
+                    "Export failed: " + error.message,
+                    true
+                );
+
+                await refreshExportOperations();
+
+            } finally {
+                exportButton.disabled = false;
+                chooseButton.disabled = false;
+                clearButton.disabled = false;
+            }
+        }
+    );
+})();
+</script>
+{% endblock %}

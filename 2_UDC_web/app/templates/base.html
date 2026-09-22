@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Converter_2 / UDC{% endblock %}</title>
+
+    <style>
+        :root {
+            --bg: #f4f6f8;
+            --panel: #ffffff;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --border: #d8dee6;
+            --accent: #2563eb;
+            --accent-dark: #1d4ed8;
+            --ok: #15803d;
+            --danger: #b91c1c;
+            --running: #b45309;
+            --nav: #111827;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding-bottom: 50px;
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        header {
+            background: var(--nav);
+            color: white;
+            padding: 0 22px;
+        }
+
+        .nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: 58px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            font-weight: 700;
+            font-size: 18px;
+            margin-right: 18px;
+        }
+
+        .nav a {
+            color: #d1d5db;
+            text-decoration: none;
+            padding: 19px 4px 16px;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            color: white;
+            border-bottom-color: #60a5fa;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 24px auto;
+            padding: 0 22px 36px;
+        }
+
+        h1, h2, h3 { margin-top: 0; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+        }
+
+        .card, .panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.05);
+        }
+
+        .muted { color: var(--muted); }
+
+        .btn {
+            display: inline-block;
+            border: 0;
+            border-radius: 7px;
+            padding: 10px 15px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn:hover { background: var(--accent-dark); }
+        .btn.secondary { background: #4b5563; }
+        .btn.secondary:hover { background: #374151; }
+
+        .btn:disabled {
+            opacity: .55;
+            cursor: wait;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            align-items: end;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        input, select {
+            width: 100%;
+            min-width: 180px;
+            padding: 9px 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: white;
+        }
+
+        .field { min-width: 210px; }
+        .field.wide { flex: 1; min-width: 280px; }
+
+        .table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th, td {
+            padding: 9px 11px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        th { background: #eef2f7; }
+
+        tr:hover td { background: #f9fafb; }
+
+        .flash {
+            padding: 11px 14px;
+            margin: 0 0 16px;
+            border-radius: 7px;
+            background: #e0f2fe;
+            border: 1px solid #7dd3fc;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: #dcfce7;
+            color: var(--ok);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .kv {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            gap: 8px 14px;
+        }
+
+        .directory-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding: 12px;
+            margin: 12px 0 18px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #f9fafb;
+        }
+
+        .directory-value {
+            min-width: 220px;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 13px;
+        }
+
+        .inline-message {
+            margin-top: 12px;
+            min-height: 20px;
+            font-size: 13px;
+        }
+
+        }
+    
+        /* ------------------------------------------------------
+           Compact System ticker for non-Home pages
+           ------------------------------------------------------ */
+        .system-ticker {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 34px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            white-space: nowrap;
+            background: #111827;
+            color: #d1d5db;
+            border-top: 1px solid #374151;
+            box-shadow: 0 -1px 4px rgba(0,0,0,.10);
+            font-size: 12px;
+        }
+
+        .system-ticker-track {
+            display: inline-flex;
+            width: max-content;
+            align-items: center;
+            will-change: transform;
+            animation: systemTickerMove 42s linear infinite;
+        }
+
+        .system-ticker-copy {
+            display: inline-block;
+            padding-right: 90px;
+            font-family: Consolas, "Courier New", monospace;
+        }
+
+        .system-ticker-ok {
+            color: #86efac;
+            font-weight: 700;
+        }
+
+        .system-ticker-error {
+            color: #fca5a5;
+            font-weight: 700;
+        }
+
+        @keyframes systemTickerMove {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav class="nav">
+        <div class="brand">Converter_2 / UDC</div>
+
+        <a href="{{ url_for('index') }}"
+           class="{% if active_page == 'home' %}active{% endif %}">
+            Home
+        </a>
+
+        <a href="{{ url_for('db_view') }}"
+           class="{% if active_page == 'db_view' %}active{% endif %}">
+            DB View
+        </a>
+
+        <a href="{{ url_for('export_page') }}"
+           class="{% if active_page == 'export' %}active{% endif %}">
+            Export
+        </a>
+
+        <a href="{{ url_for('import_page') }}"
+           class="{% if active_page == 'import' %}active{% endif %}">
+            Import
+        </a>
+
+        <a href="{{ url_for('about') }}"
+           class="{% if active_page == 'about' %}active{% endif %}">
+            About
+        </a>
+    </nav>
+</header>
+
+<main>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="flash">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+</main>
+
+
+
+
+{% if active_page != 'home' %}
+<div class="system-ticker" aria-label="System information">
+    <div class="system-ticker-track">
+        <span class="system-ticker-copy">
+            {{ system_application }}
+            &nbsp;·&nbsp; {{ system_author }}
+            &nbsp;·&nbsp; {{ system_server }}
+            &nbsp;·&nbsp; {{ system_database }}
+            &nbsp;·&nbsp;
+            {% if system_connected %}
+                <span class="system-ticker-ok">Connected</span>
+            {% else %}
+                <span class="system-ticker-error">Not connected</span>
+            {% endif %}
+        </span>
+
+        <span class="system-ticker-copy" aria-hidden="true">
+            {{ system_application }}
+            &nbsp;·&nbsp; {{ system_author }}
+            &nbsp;·&nbsp; {{ system_server }}
+            &nbsp;·&nbsp; {{ system_database }}
+            &nbsp;·&nbsp;
+            {% if system_connected %}
+                <span class="system-ticker-ok">Connected</span>
+            {% else %}
+                <span class="system-ticker-error">Not connected</span>
+            {% endif %}
+        </span>
+    </div>
+</div>
+{% endif %}
+
+
+{% block scripts %}{% endblock %}
+
+</body>
+</html>

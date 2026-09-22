@@ -16,13 +16,3 @@ if ($env:CONDA_PREFIX) {
 ------------------------------------------
 . .\script\start.ps1  = . + пробел + .\script\start.ps1
 
-
-----------------------------GIT
-
-cd /c/SourceCode/Psc/UDC-UniversalDataConverter
-
-git init
-git branch -M main
-git remote add origin https://github.com/RLisovenko/UDC-UniversalDataConverter.git
-git fetch origin
-git reset --mixed origin/main

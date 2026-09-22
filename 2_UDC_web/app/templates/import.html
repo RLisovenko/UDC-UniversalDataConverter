@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block title %}Import - Converter_2{% endblock %}
+
+{% block content %}
+
+<h1>Import Data</h1>
+
+<section class="panel">
+
+    <div class="flash" style="background:#fff7ed;border-color:#fed7aa">
+        <strong>Test implementation:</strong>
+        Import currently supports <strong>CSV only</strong>.
+    </div>
+
+    <h2>Ready-to-use test files</h2>
+
+    <p class="muted">
+        These CSV files are already included in <strong>app/import</strong>.
+        For the test task, click <strong>Load test file</strong> —
+        no file search is required.
+    </p>
+
+    {% if test_files %}
+    <div class="table-wrap" style="margin-bottom:18px">
+        <table>
+            <thead>
+                <tr>
+                    <th>Test file</th>
+                    <th>Location</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for filename in test_files %}
+                <tr>
+                    <td><strong>{{ filename }}</strong></td>
+                    <td>app/import</td>
+                    <td>
+                        <form method="post"
+                              action="{{ url_for('import_test_file') }}"
+                              style="margin:0">
+                            <input type="hidden"
+                                   name="filename"
+                                   value="{{ filename }}">
+                            <button class="btn"
+                                    type="submit">
+                                Load test file
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p class="muted">
+            No CSV test files were found in app/import.
+        </p>
+    {% endif %}
+
+    <p class="muted" style="font-size:13px">
+        The current web test validates the CSV structure and rows.
+        The database import dispatcher will be connected separately.
+    </p>
+
+    <hr style="border:0;border-top:1px solid #d8dee6;margin:24px 0">
+
+    <h2>Upload your own CSV</h2>
+
+    <form
+        method="post"
+        action="{{ url_for('import_page') }}"
+        enctype="multipart/form-data"
+    >
+        <div class="toolbar">
+            <div class="field wide">
+                <label for="file">CSV source file</label>
+                <input
+                    id="file"
+                    name="file"
+                    type="file"
+                    accept=".csv,text/csv"
+                    required
+                >
+            </div>
+
+            <div>
+                <button class="btn" type="submit">
+                    Upload CSV
+                </button>
+            </div>
+        </div>
+    </form>
+
+    {% if import_result %}
+        <div class="flash" style="margin-top:16px">
+            {{ import_result }}
+        </div>
+    {% endif %}
+
+    {% if import_summary %}
+    <div class="panel"
+         style="margin-top:18px;background:#f8fafc;border-left:4px solid #2563eb">
+
+        <h3 style="margin-bottom:14px">Import test completed</h3>
+
+        <div class="kv">
+            <div class="muted">File</div>
+            <div><strong>{{ import_summary.file }}</strong></div>
+
+            <div class="muted">Rows validated</div>
+            <div>{{ import_summary.rows }}</div>
+
+            <div class="muted">Target</div>
+            <div>{{ import_summary.target }}</div>
+
+            <div class="muted">Stage</div>
+            <div>{{ import_summary.stage }}</div>
+        </div>
+
+        <p class="muted" style="font-size:12px;margin:14px 0 0">
+            Prototype note: the current web flow validates the CSV.
+            Database write is not connected yet.
+        </p>
+    </div>
+    {% endif %}
+
+</section>
+
+<section class="panel" style="margin-top:18px">
+    <h2>Recent operations</h2>
+
+    {% if recent_operations %}
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Operation</th>
+                    <th>File</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody id="import-operations-body">
+                {% for item in recent_operations %}
+                <tr>
+                    <td>{{ item.time }}</td>
+                    <td>{{ item.operation }}</td>
+                    <td>{{ item.filename }}</td>
+                    <td>
+                        {% if item.status == 'OK' %}
+                            <span style="color:#15803d;font-weight:700">OK</span>
+                        {% elif item.status == 'RUNNING' %}
+                            <span style="color:#b45309;font-weight:700">RUNNING</span>
+                        {% else %}
+                            <span style="color:#b91c1c;font-weight:700">ERROR</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ item.detail }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p class="muted">No import operations yet.</p>
+    {% endif %}
+</section>
+
+{% endblock %}
