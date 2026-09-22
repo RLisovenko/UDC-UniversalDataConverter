@@ -1,4 +1,4 @@
-# Converter_2 / UDC
+# UDC-UniversalDataConverter
 
 A small demonstration prototype for working with data import/export workflows around a Microsoft SQL Server database.
 
