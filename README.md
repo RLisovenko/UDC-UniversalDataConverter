@@ -1,206 +1,68 @@
-# UDC-UniversalDataConverter
+# UDC — Universal Data Converter
 
-A small demonstration prototype for working with data import/export workflows around a Microsoft SQL Server database.
+A demonstration project for organizing data conversion workflows with Python and Microsoft SQL Server.
 
-The project was developed within a limited timeframe as a technical example. All included data is synthetic and intended only for testing and demonstration.
+The project shows how database records can be presented in a standardized structure, inspected through a web interface, and exported to CSV, JSON, or XML.
 
-## Current functionality
+All included data is synthetic and intended only for testing and demonstration.
 
-- SQL Server 2025 in Docker
-- Persistent database volumes
-- Database initialization / verification container
-- Flask web interface
-- Database table/view browser
-- Export from the standardized UDC view
-- Export formats:
-  - CSV
-  - JSON
-  - XML
-- CSV import test workflow
-- Ready-to-use synthetic import samples
-- Ready-to-use export examples
-- Recent operation status for Import and Export
-- Docker Compose orchestration
-
-## Current prototype scope
-
-### Export
-
-Implemented for:
-
-- CSV
-- JSON
-- XML
-
-Default output directory:
+## Repository overview
 
 ```text
-app/export
-```
-
-### Import
-
-The current web prototype focuses on CSV.
-
-Ready-to-use test files are included in:
-
-```text
-app/import
-```
-
-Example files:
-
-```text
-ClientImport_A.csv
-ClientImport_B.csv
-ClientImport_C.csv
-```
-
-The current web flow validates the CSV structure and data rows. Full database-write integration for the import dispatcher is still part of the planned next development stage.
-
-## Project structure
-
-```text
-p1-2_UDC_web/
-├── app/
-│   ├── import/
-│   ├── export/
-│   ├── templates/
-│   ├── utils/
-│   ├── udc_web_app.py
-│   ├── db_con_UDC.py
-│   ├── db_view.py
-│   ├── import_data.py
-│   ├── export_data.py
-│   └── requirements.txt
-│
-├── docker/
-│   ├── compose.yml
-│   ├── WEB_UDC/
-│   │   └── Dockerfile
-│   └── udc_db_init/
-│       ├── Dockerfile
-│       ├── init_database.sh
-│       └── init_database.sql
-│
+UDC-UniversalDataConverter/
+├── 1_udc/              # Backend-oriented converter prototype
+├── 2_UDC_web/          # Flask web application and Docker environment
+├── 3_UDC_Codespaces/   # GitHub Codespaces setup and demo guide
+├── .devcontainer/      # Codespaces development environment configuration
 └── README.md
 ```
 
-## Docker services
+### 1_udc — Backend prototype
 
-The Docker Compose environment contains:
+The backend-oriented implementation explores data mapping and conversion using Python and SQL Server.
 
-```text
-udc_volume_init
-    ↓
-mssql_2025_dev
-    ↓
-udc_db_init
-    ↓
-web_udc
-```
+### 2_UDC_web — Web prototype
 
-`udc_volume_init` prepares volume permissions.
+A Flask application for demonstrating the workflow in a browser:
 
-`mssql_2025_dev` runs Microsoft SQL Server.
+- Browse database tables and views.
+- Export standardized data to CSV, JSON, or XML.
+- Validate CSV import samples.
+- View recent import and export operation status.
 
-`udc_db_init` performs repeat-safe database initialization and verifies that the required UDC objects exist.
+Docker Compose runs SQL Server, database initialization, and the web application with persistent database volumes.
 
-`web_udc` runs the Flask application.
+The current CSV import workflow validates file structure and data rows. Writing imported data to the database is planned for a later stage.
 
-## Required database objects
+### 3_UDC_Codespaces — Cloud demo guide
 
-The current prototype expects:
+Step-by-step instructions for running the web prototype in GitHub Codespaces and sharing it through an HTTPS link.
 
-```text
-dbo.data_measurement
-dbo.data_measure_map
-dbo.field_mapping_config
-dbo.list_measurement_parameter
-dbo.vw_data_measure_map
-```
+## Live demo
 
-## Configuration
+[Open UniversalDataConverter — Live Demo](https://ominous-sniffle-jrr7qpg9pv9cjqqj-5000.app.github.dev/)
 
-Passwords and environment-specific settings must not be committed to Git.
+Visitors do not need to install software, clone the repository, or run commands.
 
-The Docker environment expects values such as:
+GitHub may display a **Codespaces Access Port** notice. Click **Continue** to open the demo. No GitHub sign-in is required when port 5000 is Public.
 
-```text
-MSSQL_SA_PASSWORD
-UDC_VOLUME_NAME
-```
+The demo is available while the Codespace and application are running.
 
-Store them in a local `.env` file.
+## Project status
 
-The `.env` file is excluded through `.gitignore`.
+This is an early demonstration prototype, not a production-ready system.
 
-## Build the web image
+Further development includes full CSV-to-database import integration, extended field mapping, stronger validation, improved error handling, and additional automated tests.
 
-From the project root:
+An AI coding agent assisted with selected implementation, refactoring, and documentation tasks. Architecture, backend logic, database design, integration decisions, testing, and final technical review remained my responsibility.
 
-```bash
-docker build -f docker/WEB_UDC/Dockerfile -t web_udc:latest .
-```
+## Setup and instructions
 
-## Start the environment
+Each main directory contains its own documentation:
 
-From the `docker` directory:
-
-```bash
-docker compose config
-docker compose up -d
-docker compose ps -a
-```
-
-To recreate only the web container after rebuilding the image:
-
-```bash
-docker compose up -d --force-recreate web_udc
-```
-
-## Web interface
-
-After startup:
-
-```text
-http://localhost:5000
-```
-
-Available sections:
-
-```text
-Home
-DB View
-Export
-Import
-About
-```
-
-## Test data
-
-All data included with this repository is synthetic.
-
-It does not contain real patient, clinical, or production data.
-
-The import samples intentionally use clearly identifiable test values so that they can be distinguished from export examples.
-
-## Development note
-
-This application is an early demonstration prototype rather than a production-ready system.
-
-If development is continued, planned areas include:
-
-- full CSV-to-database import integration
-- extended transformation and field mapping
-- stronger validation
-- improved error handling
-- additional automated tests
-- further user-interface refinement
-
-To accelerate development within the available timeframe, an AI coding agent was used for selected implementation, refactoring and development-support tasks.
-
-At the same time, the overall architecture, backend development and application logic, database design, integration decisions, Docker-based environment, testing and final technical review remained under my responsibility as the backend developer of the project.
+- [Backend overview and instructions](1_udc/readme.md)
+- [Web application setup and instructions](2_UDC_web/README_UDC.md)
+- [Codespaces setup and demo instructions](3_UDC_Codespaces/readme.md)
 
 ## Author
 
