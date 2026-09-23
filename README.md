@@ -5,6 +5,25 @@ A demonstration project for organizing data conversion workflows with Python and
 The project shows how database records can be presented in a standardized structure, inspected through a web interface, and exported to CSV, JSON, or XML.
 
 All included data is synthetic and intended only for testing and demonstration.
+## Application preview
+
+The screenshots below show the web interface. They remain available even when the live demo is offline.
+
+### Home
+
+![UDC home page](pic/udc-demo.jpg)
+
+### Database viewer
+
+![Database tables and views](pic/udc-demo_db_view.jpg)
+
+### Export
+
+![Data export interface](pic/udc-demo_export.jpg)
+
+### Import
+
+![CSV import validation interface](pic/udc-demo_import.jpg)
 
 ## Repository overview
 

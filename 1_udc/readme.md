@@ -42,3 +42,22 @@ Python Backend
     +--> SQL
     +--> API
 ```
+## Application preview
+
+The screenshots below show the web interface. They remain available even when the live demo is offline.
+
+### Home
+
+![UDC home page](pic/udc-demo.jpg)
+
+### Database viewer
+
+![Database tables and views](pic/udc-demo_db_view.jpg)
+
+### Export
+
+![Data export interface](pic/udc-demo_export.jpg)
+
+### Import
+
+![CSV import validation interface](pic/udc-demo_import.jpg)
