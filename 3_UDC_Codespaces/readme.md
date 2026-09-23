@@ -7,6 +7,12 @@ Visitors do not need to install software, clone the repository, run commands, or
 ## Live demo
 
 [Open UniversalDataConverter — Live Demo](https://ominous-sniffle-jrr7qpg9pv9cjqqj-5000.app.github.dev/)
+On your first visit, GitHub may display a “Codespaces Access Port” notice.
+Click **Continue** to open the demo. No GitHub sign-in is required.
+
+After restarting the Codespace, set port 5000 visibility to Public again.
+Keep SQL Server port 14330 Private.
+Verify the demo link in an incognito window before sharing it.
 
 The link works while the Codespace and application are running. It is a demonstration environment, not permanent hosting.
 
