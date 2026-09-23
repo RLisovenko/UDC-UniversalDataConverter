@@ -41,8 +41,12 @@ services:
   # SQL Server 2025 container.
   # ------------------------------------------------------------
   mssql_2025_dev:
+    # Build the SQL Server image from the repository.
+    build:
+      context: ./SQL_SEVER_2025
+      dockerfile: Dockerfile
 
-    # Use the SQL Server image that was built separately.
+    # Name of the built SQL Server image.
     image: mssql_2025_dev:latest
 
     # Explicit container name for easy identification.
@@ -51,7 +55,7 @@ services:
     # SQL Server environment variables.
     environment:
       ACCEPT_EULA: "Y"
-      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?Set MSSQL_SA_PASSWORD before starting UDC}
       MSSQL_PID: "Developer"
 
     # Windows localhost:14330 -> container SQL Server:1433.
@@ -92,8 +96,10 @@ services:
   # Creates and initializes the Converter_UDC database.
   # ------------------------------------------------------------
   udc_db_init:
-
-    # Use the database initialization image built separately.
+    # Build the database initialization image.
+    build:
+      context: ./udc_db_init
+      dockerfile: Dockerfile
     image: udc_db_init:latest
 
     # Explicit container name for easy identification.
@@ -101,7 +107,7 @@ services:
 
     # Password used by sqlcmd to connect to SQL Server.
     environment:
-      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?Set MSSQL_SA_PASSWORD before starting UDC}
 
     # Start database initialization only after SQL Server is healthy.
     depends_on:
@@ -117,7 +123,10 @@ services:
   # Flask application for the Universal Data Converter.
   # ------------------------------------------------------------
   web_udc:
-
+    # Build the Flask application image.
+    build:
+      context: ..
+      dockerfile: docker/web_udc/Dockerfile
     image: web_udc:latest
     container_name: web_udc
 
@@ -126,7 +135,7 @@ services:
       - ../app/export:/app/export
 
     environment:
-      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?Set MSSQL_SA_PASSWORD before starting UDC}
 
     ports:
       - "5000:5000"
@@ -152,4 +161,4 @@ volumes:
 
   # Physical Converter_UDC database files (.mdf / .ldf).
   db_udc:
-    name: ${UDC_VOLUME_NAME}
+    name: ${UDC_VOLUME_NAME:-udc_db_data}
