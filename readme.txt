@@ -1,3 +1,14 @@
+----------------перезапуск В терминале Codespaces запускает уже собранные контейнеры 
+docker compose -f 2_UDC_web/docker/compose.yml up -d --no-build
+docker compose -f 2_UDC_web/docker/compose.yml ps -a
+-----------------Проверить подключение:
+curl -sS --max-time 30 http://localhost:5000/db-status
+
+После каждого перезапуска проверить Ports:
+5000 → Public, протокол HTTP.
+14330 → Private.
+------------------------------------------------------------
+
 создать напрямую переменные окружения с среды по ссылке
 & "C:\dev_soft\Anaconda3_2023\python.exe" -m venv .venv
 
