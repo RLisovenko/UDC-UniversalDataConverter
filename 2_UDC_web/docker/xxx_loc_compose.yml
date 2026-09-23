@@ -1,0 +1,164 @@
+# Author: R.Lisovenko
+# Date: 21.09.2026
+# Description: Docker Compose configuration for the UDC database environment.
+
+name: udc
+
+services:
+
+  # ------------------------------------------------------------
+  # DATABASE VOLUME INITIALIZATION
+  # Prepares permissions for the physical UDC database storage.
+  # ------------------------------------------------------------
+  udc_volume_init:
+
+    # Lightweight Linux image used only to prepare the db_udc volume.
+    image: alpine:latest
+
+    # Explicit container name for easy identification.
+    container_name: udc_volume_init
+
+    # Run as root because ownership and permissions must be changed.
+    user: root
+
+    # Mount the physical UDC database volume.
+    volumes:
+      - db_udc:/data
+
+    # SQL Server 2025 runs as Linux user UID 10001.
+    # Give this user ownership and write access to the database volume.
+    command:
+      - sh
+      - -c
+      - chown -R 10001:0 /data && chmod 770 /data
+
+    # This is a one-time preparation container.
+    restart: "no"
+
+
+  # ------------------------------------------------------------
+  # SERVER
+  # SQL Server 2025 container.
+  # ------------------------------------------------------------
+  mssql_2025_dev:
+    # Build the SQL Server image from the repository.
+    build:
+      context: ./SQL_SEVER_2025
+      dockerfile: Dockerfile
+
+    # Name of the built SQL Server image.
+    image: mssql_2025_dev:latest
+
+    # Explicit container name for easy identification.
+    container_name: mssql_2025_dev
+
+    # SQL Server environment variables.
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+      MSSQL_PID: "Developer"
+
+    # Windows localhost:14330 -> container SQL Server:1433.
+    ports:
+      - "14330:1433"
+
+    # Persistent SQL Server storage.
+    volumes:
+
+      # SQL Server system databases and internal files.
+      - mssql_data:/var/opt/mssql
+
+      # Physical files of the Converter_UDC database.
+      - db_udc:/var/opt/mssql/udc_data
+
+    # Start SQL Server only after db_udc permissions are prepared.
+    depends_on:
+      udc_volume_init:
+        condition: service_completed_successfully
+
+    # Check when SQL Server is actually ready to accept connections.
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -C -Q \"SELECT 1\" || exit 1"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+    restart: unless-stopped
+
+
+  # ------------------------------------------------------------
+  # DATABASE INITIALIZATION
+  # Creates and initializes the Converter_UDC database.
+  # ------------------------------------------------------------
+  udc_db_init:
+    # Build the database initialization image.
+    build:
+      context: ./udc_db_init
+      dockerfile: Dockerfile
+    image: udc_db_init:latest
+
+    # Explicit container name for easy identification.
+    container_name: udc_db_init
+
+    # Password used by sqlcmd to connect to SQL Server.
+    environment:
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+
+    # Start database initialization only after SQL Server is healthy.
+    depends_on:
+      mssql_2025_dev:
+        condition: service_healthy
+
+    # This is a one-time initialization container.
+    # After init_database.sql finishes successfully,
+    # the container stops with exit code 0.
+    restart: "no"
+  # ------------------------------------------------------------
+  # WEB APPLICATION
+  # Flask application for the Universal Data Converter.
+  # ------------------------------------------------------------
+  web_udc:
+    # Build the Flask application image.
+    build:
+      context: ..
+      dockerfile: docker/web_udc/Dockerfile
+    image: web_udc:latest
+    container_name: web_udc
+
+    volumes:
+      - ../app/import:/app/import
+      - ../app/export:/app/export
+
+    environment:
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+
+    ports:
+      - "5000:5000"
+
+    # Start the web application only after SQL Server is ready
+    # and the Converter_UDC database initialization is complete.
+    depends_on:
+      mssql_2025_dev:
+        condition: service_healthy
+
+      udc_db_init:
+        condition: service_completed_successfully
+
+    restart: unless-stopped
+
+# ------------------------------------------------------------
+# Persistent Docker storage.
+# ------------------------------------------------------------
+volumes:
+
+  # SQL Server system databases and internal files.
+  mssql_data:
+
+  # Physical Converter_UDC database files (.mdf / .ldf).
+  db_udc:
+    name: ${UDC_VOLUME_NAME}
