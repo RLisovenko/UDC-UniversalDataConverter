@@ -37,3 +37,10 @@ git branch -M main
 git remote add origin https://github.com/RLisovenko/UDC-UniversalDataConverter.git
 git fetch origin
 git reset --mixed origin/main
+------------------------------add
+git status
+git add .
+git status
+git commit -m "Add working UDC V2 portable version"
+git push origin main
+
