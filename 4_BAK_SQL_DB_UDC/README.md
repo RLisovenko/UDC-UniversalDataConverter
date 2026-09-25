@@ -20,6 +20,31 @@ The script and backup were produced at different times and may contain different
 
 The portable script can be used with SQL Server on Windows or in a Linux Docker container. It is not intended for MySQL, PostgreSQL, or SQLite. Compatibility with a particular SQL Server version should be verified before use. A backup cannot be restored to an older SQL Server version than the instance that created it.
 
+## Database Preview
+
+### Database structure
+
+The UDC database includes measurement records, imported data,
+field mapping configuration, a parameter catalog, and an export view.
+
+![UDC database structure](pic/database-structure.png)
+
+### Imported data — `dbo.data_measure_map`
+
+Stores imported records in a standardized format: subject identifier,
+measurement date, parameter, value, unit, and comment.
+Import and export timestamps help track data exchange.
+
+![Imported measurement records](pic/data-measure-map.png)
+
+### Parameter catalog — `dbo.list_measurement_parameter`
+
+Defines measurement parameters, their units, descriptions, and active
+status. Examples include glucose, temperature, CRP, and heart rate.
+
+![Measurement parameter catalog](pic/measurement-parameters.png)
+---
+
 ## Option 1 — Create the Database from the Portable Script
 
 1. Connect to the target SQL Server instance in SSMS.
